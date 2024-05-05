@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Morse Code Converter</h2>
+        <input type="text" id="inputText" placeholder="Enter Morse code or Alphabet">
+        <button onclick="convert()">Convert</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const morseCodeToAlphabet = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.","...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."];
+        const alphabetToMorseCode = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..'
+        };
+
+        function convert() {
+            let userInput = document.getElementById("inputText").value.trim();
+            let output = document.getElementById("output");
+            let convertedText = '';
+
+            if (/^[.-\s]+$/.test(userInput)) { // Morse Code to Alphabet
+                userInput = userInput.split(' ');
+                userInput.forEach(code => {
+                    if (morseCodeToAlphabet.includes(code)) {
+                        convertedText += String.fromCharCode(65 + morseCodeToAlphabet.indexOf(code));
+                    }
+                });
+            } else { // Alphabet to Morse Code
+                userInput = userInput.toUpperCase();
+                for (let i = 0; i < userInput.length; i++) {
+                    let char = userInput[i];
+                    if (alphabetToMorseCode[char]) {
+                        convertedText += alphabetToMorseCode[char] + " ";
+                    }
+                }
+            }
+
+            output.innerText = convertedText.trim();
+        }
+    </script>
+</body>
+</html>
